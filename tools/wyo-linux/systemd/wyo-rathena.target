@@ -1,0 +1,7 @@
+[Unit]
+Description=World Yggdrasil Online rAthena Stack
+Wants=wyo-login.service wyo-char.service wyo-map.service wyo-web.service
+After=mariadb.service
+
+[Install]
+WantedBy=multi-user.target
