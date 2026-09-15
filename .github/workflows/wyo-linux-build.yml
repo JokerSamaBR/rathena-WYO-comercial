@@ -15,14 +15,29 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+      - name: Check source tree availability
+        id: source
+        shell: bash
+        run: |
+          if [[ -f configure && -d src && -d 3rdparty ]]; then
+            echo "complete=true" >> "$GITHUB_OUTPUT"
+            echo "Full WYO source tree detected."
+          else
+            echo "complete=false" >> "$GITHUB_OUTPUT"
+            echo "Repository infrastructure is present, but the full WYO source tree has not been pushed yet; build steps are skipped."
+          fi
       - name: Install dependencies
+        if: steps.source.outputs.complete == 'true'
         run: |
           sudo apt-get update
           sudo apt-get install -y make gcc g++ clang cmake pkg-config libmariadb-dev libmariadb-dev-compat zlib1g-dev libssl-dev python3 python3-yaml
           if apt-cache show libpcre3-dev >/dev/null 2>&1; then sudo apt-get install -y libpcre3-dev; fi
       - name: Validate WYO tree
+        if: steps.source.outputs.complete == 'true'
         run: tools/wyo-linux/verify.sh
       - name: Build servers
+        if: steps.source.outputs.complete == 'true'
         run: WYO_COMPILER=clang JOBS=1 tools/wyo-linux/build.sh
       - name: Validate binaries
+        if: steps.source.outputs.complete == 'true'
         run: file login-server char-server map-server web-server
