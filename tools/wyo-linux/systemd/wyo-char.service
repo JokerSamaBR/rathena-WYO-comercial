@@ -1,0 +1,29 @@
+[Unit]
+Description=WYO rAthena Char Server
+After=network-online.target mariadb.service wyo-login.service
+Wants=wyo-login.service
+
+[Service]
+Type=simple
+User=@WYO_USER@
+WorkingDirectory=@WYO_ROOT@
+ExecStart=@WYO_ROOT@/char-server
+Restart=on-failure
+RestartSec=3
+LimitNOFILE=65535
+UMask=0027
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=full
+ProtectHome=read-only
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+ReadWritePaths=-@WYO_ROOT@/log -@WYO_ROOT@/generated
+
+[Install]
+WantedBy=wyo-rathena.target
