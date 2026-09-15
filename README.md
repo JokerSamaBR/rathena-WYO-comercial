@@ -47,6 +47,8 @@ The uploaded Windows tree was treated as the WYO source of truth. The Linux port
 
 See **`doc/WYO/WYO_LINUX_PORT_AUDIT.md`**.
 
+Final build/security audit: **`doc/WYO/WYO_FINAL_LINUX_AUDIT.md`**.
+
 ## Upstream documentation
 
 - rAthena: https://github.com/rathena/rathena
