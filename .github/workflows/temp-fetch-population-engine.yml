@@ -17,14 +17,17 @@ jobs:
   snapshot:
     runs-on: ubuntu-latest
     steps:
-      - name: Clone public base
+      - name: Clone historical public base
         run: |
-          git clone --depth 1 https://github.com/JokerSamaBR/Population-Engine.git source
-          rm -rf source/.git
-          tar -czf population-engine-base.tar.gz source
+          git clone https://github.com/JokerSamaBR/Population-Engine.git source
+          cd source
+          git checkout 260b826eb874d5be0691a482e28f228889748a57
+          rm -rf .git
+          cd ..
+          tar -czf population-engine-base-2026-05.tar.gz source
       - name: Upload snapshot
         uses: actions/upload-artifact@v4
         with:
-          name: population-engine-base
-          path: population-engine-base.tar.gz
+          name: population-engine-base-2026-05
+          path: population-engine-base-2026-05.tar.gz
           retention-days: 1
