@@ -31,3 +31,5 @@ jobs:
           name: population-engine-base-2026-05
           path: population-engine-base-2026-05.tar.gz
           retention-days: 1
+
+# WYO publication refresh: 2026-09-17
