@@ -1,0 +1,22 @@
+name: WYO Access Test
+on:
+  push:
+    branches: [ main ]
+    paths: [ '.github/workflows/wyo-access-test.yml' ]
+permissions:
+  contents: write
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test sibling repository access
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          if git ls-remote "https://x-access-token:${GH_TOKEN}@github.com/JokerSamaBR/rathena-comercio.git" HEAD >/dev/null 2>&1; then
+            echo "SIBLING_ACCESS=YES"
+          else
+            echo "SIBLING_ACCESS=NO"
+            exit 42
+          fi
