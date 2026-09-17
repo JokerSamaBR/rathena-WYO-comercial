@@ -1,0 +1,30 @@
+name: TEMP - Fetch Population Engine Base
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - '.github/workflows/temp-fetch-population-engine.yml'
+
+permissions:
+  contents: read
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  snapshot:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone public base
+        run: |
+          git clone --depth 1 https://github.com/JokerSamaBR/Population-Engine.git source
+          rm -rf source/.git
+          tar -czf population-engine-base.tar.gz source
+      - name: Upload snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: population-engine-base
+          path: population-engine-base.tar.gz
+          retention-days: 1
